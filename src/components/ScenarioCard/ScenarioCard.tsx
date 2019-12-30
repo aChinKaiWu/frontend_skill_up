@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Icon, makeStyles } from '@material-ui/core'
+import dayjs from 'dayjs'
 import Scenario from '../../model/scenario'
 import { ScenarioListMode } from '../ScenarioList/ScenarioList'
 import DeletionCheckbox from './DeletionCheckbox'
@@ -75,7 +76,7 @@ export default function ScenarioCard(props: Props) {
       <CardMedia className="thumbnail" component="img" src={scenario.thumbnail_url} />
       <CardContent className="content">
         <div>{scenario.display_name}</div>
-        <div>{scenario.updated_at}</div>
+        <div>{dayjs(scenario.updated_at).format('YYYY/MM/DD HH:mm')}</div>
       </CardContent>
       {mode === ScenarioListMode.View && (
         <CardActions className="actions">
