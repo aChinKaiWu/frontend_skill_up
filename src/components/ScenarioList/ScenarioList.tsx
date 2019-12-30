@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, makeStyles, Icon } from '@material-ui/core'
-import ScenarioCard from '../ScenarioCard/ScenarioCard'
+import ScenarioCard from '../ScenarioCard'
 import { Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
@@ -21,12 +21,12 @@ export enum ScenarioListMode {
 
 interface Props {
   scenarioList: Scenario[]
-  onGetSceanrioList: () => void
+  onGetScenarioList: () => void
 }
 
 export default function ScenarioList(props: Props) {
   // destruct
-  const { scenarioList, onGetSceanrioList } = props
+  const { scenarioList, onGetScenarioList } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
@@ -34,19 +34,19 @@ export default function ScenarioList(props: Props) {
   // reducer get sceanrios
   // fake componentDidMount
   useEffect(() => {
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
   const onCheck = useCallback(
     (scenarioID: number) => {
       const idx = checkedScenarioIDs.findIndex(id => id === scenarioID)
+
       if (idx === -1) {
         checkedScenarioIDs.push(scenarioID)
-        setCheckedScenarioIDs([...checkedScenarioIDs])
-        return
+      } else {
+        checkedScenarioIDs.splice(idx, 1)
       }
 
-      checkedScenarioIDs.splice(idx, 1)
       setCheckedScenarioIDs([...checkedScenarioIDs])
     },
     [checkedScenarioIDs],
@@ -54,8 +54,8 @@ export default function ScenarioList(props: Props) {
 
   const onRefresh = useCallback(() => {
     // Todo: refresh sceanrios
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
   return (
     <>
