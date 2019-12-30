@@ -64,10 +64,10 @@ export default function ScenarioCard(props: Props) {
               <img src={IconLock} alt="Lock" />
             </Icon>
             <Icon>
-              <img src={IconRun} alt="Lock" />
+              <img src={IconRun} alt="Run" />
             </Icon>
             <Icon>
-              <img src={IconStop} alt="Lock" />
+              <img src={IconStop} alt="Stop" />
             </Icon>
           </>
         }
@@ -80,13 +80,13 @@ export default function ScenarioCard(props: Props) {
       {mode === ScenarioListMode.View && (
         <CardActions className="actions">
           <Icon>
-            <img src={IconEdit} alt="edit" />
+            <img src={IconEdit} alt="Edit" />
           </Icon>
           <Icon>
-            <img src={IconDetail} alt="detail" />
+            <img src={IconDetail} alt="Detail" />
           </Icon>
           <Icon>
-            <img src={IconData} alt="edit" />
+            <img src={IconData} alt="Data" />
           </Icon>
         </CardActions>
       )}
