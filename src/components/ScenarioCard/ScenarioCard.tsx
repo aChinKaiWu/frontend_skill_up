@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Icon, makeStyles } from '@material-ui/core'
 import Scenario from '../../model/scenario'
 import { ScenarioListMode } from '../ScenarioList/ScenarioList'
-import DeletionCheckBox from './DeletionCheckBox'
+import DeletionCheckbox from './DeletionCheckbox'
 import IconEdit from '../../assets/icons/scenario_edit.svg'
 import IconDetail from '../../assets/icons/scenario_detail.svg'
 import IconData from '../../assets/icons/scenario_data.svg'
@@ -56,7 +56,7 @@ export default function ScenarioCard(props: Props) {
 
   return (
     <Card className={classes.card}>
-      {mode === ScenarioListMode.Delete && <DeletionCheckBox onSelect={onSelect} isChecked={isChecked} />}
+      {mode === ScenarioListMode.Delete && <DeletionCheckbox onSelect={onSelect} isChecked={isChecked} />}
       <CardHeader
         title={
           <>

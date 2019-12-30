@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, styled } from '@material-ui/core'
 
-const CheckBox = styled('div')({
+const Checkbox = styled('div')({
   background: '#CCCCCC',
   position: 'absolute',
   top: 4,
@@ -18,11 +18,11 @@ interface Props {
   isChecked: boolean
 }
 
-export default function DeletionCheckBox(props: Props) {
+export default function DeletionCheckbox(props: Props) {
   const { isChecked, onSelect } = props
   return (
-    <CheckBox className={isChecked ? 'active' : ''} onClick={onSelect}>
+    <Checkbox className={isChecked ? 'active' : ''} onClick={onSelect}>
       <Icon children="check_circle" />
-    </CheckBox>
+    </Checkbox>
   )
 }
