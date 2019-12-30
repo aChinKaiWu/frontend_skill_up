@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="グループ_2768" data-name="グループ 2768" transform="translate(-672 -408)">
+    <g id="グループ_2276" data-name="グループ 2276" transform="translate(673 412)">
+      <g id="グループ_2274" data-name="グループ 2274">
+        <line id="線_94" data-name="線 94" x2="13.3" transform="translate(5.819 1.662)" fill="none" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle id="楕円形_30" data-name="楕円形 30" cx="1.663" cy="1.663" r="1.663" stroke-width="1" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <line id="線_95" data-name="線 95" x2="4.988" transform="translate(5.819 7.482)" fill="none" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle id="楕円形_31" data-name="楕円形 31" cx="1.663" cy="1.663" r="1.663" transform="translate(0 5.819)" stroke-width="1" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <line id="線_96" data-name="線 96" x2="3.325" transform="translate(5.819 13.3)" fill="none" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <circle id="楕円形_32" data-name="楕円形 32" cx="1.663" cy="1.663" r="1.663" transform="translate(0 11.638)" stroke-width="1" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </g>
+      <g id="グループ_2275" data-name="グループ 2275" transform="translate(11.638 6.65)">
+        <circle id="楕円形_33" data-name="楕円形 33" cx="6.398" cy="6.398" r="6.398" stroke-width="1" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <line id="線_97" data-name="線 97" x1="5.431" y1="5.431" transform="translate(10.919 10.919)" fill="none" stroke="#525b5c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+    <rect id="長方形_1298" data-name="長方形 1298" width="30" height="30" transform="translate(672 408)" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,100 @@
+@startuml
+
+!define DATA_COLLECTION #ffffd6
+!define COMMENT_DATA_COLLECTION #f8e58c
+
+package "vilse" <<Frame>> {
+  entity "human" as human <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id
+    --
+    data.first_name
+    data.last_name
+    data.sex
+    data.color_code_id
+  }
+
+  entity "thermal_data_(yyyymm)" as sensor_data <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id = "(human_id)_(timestamp)_(sensor_id)"
+    --
+    data.temperature.average
+    data.temperature.difference
+    data.temperature.calculation_method
+    data.temperature.displayed
+    data.body_temperature_pattern_01.max
+    data.body_temperature_pattern_01.min
+    data.body_temperature_pattern_01.avg
+    data.body_temperature_pattern_01.sdv
+    data.body_temperature_pattern_02.max
+    data.body_temperature_pattern_02.min
+    data.body_temperature_pattern_02.avg
+    data.body_temperature_pattern_02.sdv
+    data.body_temperature_pattern_03.max
+    data.body_temperature_pattern_03.min
+    data.body_temperature_pattern_03.avg
+    data.body_temperature_pattern_03.sdv
+  }
+
+  entity "sensor" as sensor <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id
+    --
+    data.name
+    data.type
+    data.alive
+    data.error
+  }
+
+  entity "alert" as alert <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id
+    --
+    data.human_id
+    data.timestamp
+    data.temperature.difference
+    data.temperature.displayed
+    data.calculation_method
+  }
+
+  entity "configuration" as setting <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id = "configuration"
+    --
+    data.alert.threshold
+    data.alert.email_dest
+    data.calculation_method
+  }
+
+  entity "daily_average" as daily_average <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id = "(YYYY-mm-dd)_(human_id)_(calculation_method)"
+    --
+    data.temperature_average
+  }
+
+  entity "(sensor_type)_image_(sensor_id)" as image <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id
+    --
+    data.human_id
+    data.timestamp
+    data.image_path
+  }
+
+  entity "system_status" as status <<D, DATA_COLLECTION>> DATA_COLLECTION {
+    + _id = "system_status"
+    --
+    data.status
+    data.retried_count
+    data.success
+    data.human_id
+    data.last_transition_at
+  }
+
+  note bottom of alert COMMENT_DATA_COLLECTION : YELLOW:Data Collection
+}
+
+human ||-ri-o{ sensor_data
+human ||-up-|| status
+sensor_data ||-up-|| status
+human ||-do-o{ image
+sensor ||-up-o{ sensor_data
+sensor ||-le-o{ image
+alert |o-le-|| sensor_data
+alert ||-up-|| setting
+daily_average ||-do-{ sensor_data
+@enduml

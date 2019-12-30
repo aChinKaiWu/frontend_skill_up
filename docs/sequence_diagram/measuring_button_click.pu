@@ -1,0 +1,59 @@
+@startuml
+skinparam backgroundColor LightYellow
+skinparam sequence {
+  GroupBackgroundColor SandyBrown
+}
+
+/' Icon Definition '/
+
+participant UI as ui
+participant AC_LOCAL as ac_local
+database    DB as db
+
+/' Sequence '/
+
+group Measuring Button Clicked When Idle
+  ui       ->  ac_local: Measure API\n(PUT /v1/humans/{human_id})
+  ac_local ->  db:       Request for retrieving\nsystem status
+  db       ->  ac_local: System status
+  ac_local ->  ac_local: Check current status and\nget current status is Idle
+  ac_local ->  db:       Update system status
+  ac_local ->  ui:       Return status code 200 and request body\n(success: true, measuring: true)
+end
+
+group Measuring Button Clicked When Measuring with Color Code ID/Manual
+  ui       ->  ac_local: Measure API\n(PUT /v1/humans/{human_id})
+  ac_local ->  db:       Request for retrieving\nsystem status
+  db       ->  ac_local: System status
+  ac_local ->  ac_local: Check current status and get current status is\nmeasuring_temperature_with_color_code/measuring_temperature_by_manual
+  ac_local ->  ui:       Return status code 200 and request body\n(success: false, measuring: false)
+end
+
+group Measuring Button Clicked When Presenting with Color Code ID
+  ui       ->  ac_local: Measure API\n(PUT /v1/humans/{human_id})
+  ac_local ->  db:       Request for retrieving\nsystem status
+  db       ->  ac_local: System status
+  ac_local ->  ac_local: Check current status and\nget current status is presenting_temperature_with_color_code
+  ac_local ->  db:       Update system status
+  ac_local ->  ui:       Return status code 200 and request body\n(success: true, measuring: true)
+end
+
+group Measuring Button Clicked When Presenting with Manual on Different Human
+  ui       ->  ac_local: Measure API\n(PUT /v1/humans/{human_id})
+  ac_local ->  db:       Request for retrieving\nsystem status
+  db       ->  ac_local: System status
+  ac_local ->  ac_local: Check current status and get current status is presenting_temperature_by_manual,\nand get current measuring human is different from API call
+  ac_local ->  db:       Update system status
+  ac_local ->  ui:       Return status code 200 and request body\n(success: true, measuring: true)
+end
+
+group Measuring Button Clicked When Presenting with Manual on Same Human
+  ui       ->  ac_local: Measure API\n(PUT /v1/humans/{human_id})
+  ac_local ->  db:       Request for retrieving\nsystem status
+  db       ->  ac_local: System status
+  ac_local ->  ac_local: Check current status and get current status is presenting_temperature_by_manual,\nand get current measuring human is same as API call
+  ac_local ->  db:       Update system status
+  ac_local ->  ui:       Return status code 200 and request body\n(success: true, measuring: false)
+end
+
+@enduml
