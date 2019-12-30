@@ -1,12 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, makeStyles, Icon } from '@material-ui/core'
+import { Button, Icon, makeStyles } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
-import { Scenario } from '../../model/scenario'
+import Scenario from '../../model/scenario'
 
 const useStyles = makeStyles({
   button: {
+    width: 90,
+    height: 32,
     border: '2px solid #525B5C',
     borderRadius: 16,
+    opacity: 1,
+    padding: '0px 15px',
+    textAlign: 'center',
+    font: 'Bold 14px YuGothic',
+    letterSpacing: 0,
   },
   list: {
     display: 'flex',
@@ -14,63 +21,60 @@ const useStyles = makeStyles({
   },
 })
 
+interface Props {
+  scenarioList: Scenario[]
+  onGetScenarioList: () => void
+}
+
 export enum ScenarioListMode {
   View = 'view',
   Delete = 'delete',
 }
 
-interface Props {
-  scenarioList: Scenario[]
-  onGetSceanrioList: () => void
-}
-
 export default function ScenarioList(props: Props) {
-  // destruct
-  const { scenarioList, onGetSceanrioList } = props
+  const { scenarioList, onGetScenarioList } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
-  // dispatch get sceanrios action
-  // reducer get sceanrios
-  // fake componentDidMount
+
+  // dispatch get scenarios action
+  // get scenarios from reducer
   useEffect(() => {
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
-  const onCheck = useCallback(
-    (scenarioID: number) => {
-      const idx = checkedScenarioIDs.findIndex(id => id === scenarioID)
-      if (idx === -1) {
-        checkedScenarioIDs.push(scenarioID)
-        setCheckedScenarioIDs([...checkedScenarioIDs])
-        return
-      }
-
-      checkedScenarioIDs.splice(idx, 1)
+  const onCheck = useCallback((scenarioID: number) => {
+    const index = checkedScenarioIDs.findIndex(id => id === scenarioID)
+    if (index === -1) {
+      checkedScenarioIDs.push(scenarioID)
       setCheckedScenarioIDs([...checkedScenarioIDs])
-    },
-    [checkedScenarioIDs],
-  )
+      return
+    }
+    checkedScenarioIDs.splice(index, 1)
+    setCheckedScenarioIDs([...checkedScenarioIDs])
+  }, [checkedScenarioIDs])
 
   const onRefresh = useCallback(() => {
-    // Todo: refresh sceanrios
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    // TODO handle refresh
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
   return (
     <>
       {/* header */}
       <Button className={classes.button} variant="outlined" onClick={onRefresh}>
-        <Icon>refresh</Icon>
+        <Icon children="refresh" />
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
-      {/* sceanrio cards */}
+      <Button className={classes.button} variant="outlined" onClick={() => setMode(ScenarioListMode.Delete)}>
+        <Icon children="delete" />
+        刪除
+      </Button>
+      {/* scenario cards */}
       <div className={classes.list}>
-        {scenarioList.map((scenario, idx) => {
+        {scenarioList.map((scenario, index) => {
           const isChecked = checkedScenarioIDs.includes(scenario.id)
-          console.log(scenario.id, isChecked)
-          return <ScenarioCard key={idx} scenario={scenario} mode={mode} isChecked={isChecked} onCheck={onCheck} />
+          return <ScenarioCard key={index} scenario={scenario} mode={mode} isChecked={isChecked} onCheck={onCheck} />
         })}
       </div>
     </>

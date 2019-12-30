@@ -3,7 +3,6 @@ import ScenarioList from '../../components/ScenarioList/ScenarioList'
 import FakeScenarioImg from '../../assets/icons/fake-scenario.png'
 
 export default function ScenarioContainer() {
-  // const {scenarios} = useSelector(....)
   const scenarioList = [
     {
       id: 1,
@@ -48,14 +47,15 @@ export default function ScenarioContainer() {
       thumbnail_url: FakeScenarioImg,
     },
   ]
-  const onGetSceanrioList = useCallback(() => {
+
+  const onGetScenarioList = useCallback(() => {
     // dispatch action
-    console.log(123)
+    console.log('onGetScenarioList')
   }, [])
 
   return (
     <>
-      <ScenarioList scenarioList={scenarioList} onGetSceanrioList={onGetSceanrioList} />
+      <ScenarioList scenarioList={scenarioList} onGetScenarioList={onGetScenarioList}></ScenarioList>
     </>
   )
 }
