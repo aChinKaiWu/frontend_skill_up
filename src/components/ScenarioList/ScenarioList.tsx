@@ -69,7 +69,6 @@ export default function ScenarioList(props: Props) {
       <div className={classes.list}>
         {scenarioList.map((scenario, idx) => {
           const isChecked = checkedScenarioIDs.includes(scenario.id)
-          console.log(scenario.id, isChecked)
           return <ScenarioCard key={idx} scenario={scenario} mode={mode} isChecked={isChecked} onCheck={onCheck} />
         })}
       </div>
