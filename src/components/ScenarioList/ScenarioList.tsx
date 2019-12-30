@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, makeStyles, Icon } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
+import { DeleteSenarioData } from '../../reducer/senario/senarioActions'
 import { Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
@@ -22,14 +23,16 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetSceanrioList: () => void
+  onDeleteSceanrioList: (data: DeleteSenarioData) => void
 }
 
 export default function ScenarioList(props: Props) {
   // destruct
-  const { scenarioList, onGetSceanrioList } = props
+  const { scenarioList, onGetSceanrioList, onDeleteSceanrioList } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
+  const isViewMode = mode === ScenarioListMode.View
   // dispatch get sceanrios action
   // reducer get sceanrios
   // fake componentDidMount
@@ -52,6 +55,16 @@ export default function ScenarioList(props: Props) {
     [checkedScenarioIDs],
   )
 
+  const onButtonClick = useCallback(() => {
+    if (isViewMode) {
+      setMode(ScenarioListMode.Delete)
+      return
+    }
+    onDeleteSceanrioList(checkedScenarioIDs)
+    setMode(ScenarioListMode.View)
+    setCheckedScenarioIDs([])
+  }, [isViewMode, onDeleteSceanrioList, setMode, checkedScenarioIDs, setCheckedScenarioIDs])
+
   const onRefresh = useCallback(() => {
     // Todo: refresh sceanrios
     onGetSceanrioList()
@@ -64,7 +77,7 @@ export default function ScenarioList(props: Props) {
         <Icon>refresh</Icon>
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+      <Button onClick={onButtonClick}>{isViewMode ? '選擇刪除項目' : '刪除'}</Button>
       {/* sceanrio cards */}
       <div className={classes.list}>
         {scenarioList.map((scenario, idx) => {
