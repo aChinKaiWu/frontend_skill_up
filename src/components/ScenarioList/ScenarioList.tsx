@@ -43,16 +43,19 @@ export default function ScenarioList(props: Props) {
     onGetScenarioList()
   }, [onGetScenarioList])
 
-  const onCheck = useCallback((scenarioID: number) => {
-    const index = checkedScenarioIDs.findIndex(id => id === scenarioID)
-    if (index === -1) {
-      checkedScenarioIDs.push(scenarioID)
+  const onCheck = useCallback(
+    (scenarioID: number) => {
+      const index = checkedScenarioIDs.findIndex(id => id === scenarioID)
+      if (index === -1) {
+        checkedScenarioIDs.push(scenarioID)
+        setCheckedScenarioIDs([...checkedScenarioIDs])
+        return
+      }
+      checkedScenarioIDs.splice(index, 1)
       setCheckedScenarioIDs([...checkedScenarioIDs])
-      return
-    }
-    checkedScenarioIDs.splice(index, 1)
-    setCheckedScenarioIDs([...checkedScenarioIDs])
-  }, [checkedScenarioIDs])
+    },
+    [checkedScenarioIDs],
+  )
 
   const onRefresh = useCallback(() => {
     // TODO handle refresh
