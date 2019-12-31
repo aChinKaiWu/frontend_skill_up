@@ -1,7 +1,7 @@
 import React from 'react'
-import { styled } from '@material-ui/core'
+import { styled, Icon, Box } from '@material-ui/core'
 
-const Checkbox = styled('div')({
+const Checkbox = styled(Box)({
   background: '#CCCCCC',
   position: 'absolute',
   top: 4,
@@ -11,6 +11,16 @@ const Checkbox = styled('div')({
   '&.active': {
     background: 'red',
   },
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+})
+
+const CheckIcon = styled(Icon)({
+  fontSize: 32,
+  color: 'white',
+  fontWeight: 'bold'
 })
 
 interface Props {
@@ -21,8 +31,10 @@ interface Props {
 export default function DeletionCheckbox(props: Props) {
   const { isChecked, onSelect } = props
   return (
-    <Checkbox className={isChecked ? 'active' : ''} onClick={onSelect}>
-      V
-    </Checkbox>
+    <>
+      <Checkbox textAlign="center" className={isChecked ? 'active' : ''} onClick={onSelect}>
+        <CheckIcon>check</CheckIcon>
+      </Checkbox>
+    </>
   )
 }
