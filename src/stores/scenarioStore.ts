@@ -1,18 +1,22 @@
 import { observable, action } from 'mobx'
 import { Scenario } from '../model/scenario'
-import { fakeScenarioList } from '../containers/ScenarioContainer/mocks'
+import { Scenario as ScenarioAPI } from '../apis'
 
 export class ScenarioStore {
   @observable
   scenarios: Scenario[] = []
 
-  @action
   loadScenarios(): void {
-    this.scenarios = [...fakeScenarioList]
+    ScenarioAPI.getList().then(
+      action(({ scenarios }) => { this.scenarios = scenarios })
+    )
   }
 
-  @action
   deleteScenarios(ids: number[]): void {
-    this.scenarios = this.scenarios.filter(scenario => !ids.includes(scenario.id))
+    ScenarioAPI.deleteList(ids).then(
+      action(() => {
+        this.scenarios = this.scenarios.filter(scenario => !ids.includes(scenario.id))
+      })
+    )
   }
 }
