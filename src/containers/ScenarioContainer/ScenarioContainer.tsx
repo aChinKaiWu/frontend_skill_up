@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react'
+import { useObserver } from 'mobx-react-lite'
 import ScenarioList from '../../components/ScenarioList/ScenarioList'
-import { fakeScenarioList as scenarioList } from './mocks'
+import { useStores } from '../../stores'
 
 export default function ScenarioContainer() {
-  // const {scenarios} = useSelector(....)
-  const onGetScenarioList = useCallback(() => {
-    // dispatch action
-  }, [])
+  const { scenarioStore } = useStores()
 
-  return (
-    <>
-      <ScenarioList scenarioList={scenarioList} onGetScenarioList={onGetScenarioList} />
-    </>
-  )
+  const onGetScenarioList = useCallback(() => {
+    scenarioStore.loadScenarios()
+  }, [scenarioStore])
+
+  return useObserver(() => (
+    <ScenarioList scenarioList={scenarioStore.scenarios} onGetScenarioList={onGetScenarioList} />
+  ))
 }

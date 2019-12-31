@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "react",
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "experimentalDecorators": true
   },
   "include": ["src"]
 }
