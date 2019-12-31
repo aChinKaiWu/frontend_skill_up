@@ -64,7 +64,10 @@ export default function ScenarioList(props: Props) {
         <Icon>refresh</Icon>
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+      <Button onClick={() => setMode(ScenarioListMode.Delete)}>
+        <Icon>delete</Icon>
+        刪除
+      </Button>
       {/* sceanrio cards */}
       <div className={classes.list}>
         {scenarioList.map((scenario, idx) => {
