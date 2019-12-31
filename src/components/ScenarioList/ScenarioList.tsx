@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, makeStyles, Icon } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
-import { DeleteSenarioData } from '../../reducer/senario/senarioActions'
+import { DeleteScenarioData } from '../../reducer/scenario/scenarioActions'
 import { Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
@@ -23,7 +23,7 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetSceanrioList: () => void
-  onDeleteSceanrioList: (data: DeleteSenarioData) => void
+  onDeleteSceanrioList: (data: DeleteScenarioData) => void
 }
 
 export default function ScenarioList(props: Props) {

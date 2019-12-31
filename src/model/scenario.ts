@@ -1,4 +1,4 @@
-export interface Scenario {
+export type Scenario = {
   id: number
   display_name: string
   created_at: string

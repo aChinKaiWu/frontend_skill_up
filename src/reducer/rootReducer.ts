@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
-import senarioReducer, { initSenarioState, ScenarioState } from './senario/senarioReducer'
+import scenarioReducer, { initSenarioState, ScenarioState } from './scenario/scenarioReducer'
 
 export interface StoreState {
-  senario: ScenarioState
+  scenario: ScenarioState
 }
 
 export const initialState: StoreState = {
-  senario: initSenarioState,
+  scenario: initSenarioState,
 }
 
 export default combineReducers({
-  senario: senarioReducer,
+  scenario: scenarioReducer,
 })

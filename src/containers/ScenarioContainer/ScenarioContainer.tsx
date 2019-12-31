@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { StoreState } from '../../reducer/rootReducer'
-import { getSenarioAct, deleteSenarioAct, DeleteSenarioData } from '../../reducer/senario/senarioActions'
+import { getSenarioAct, deleteSenarioAct, DeleteScenarioData } from '../../reducer/scenario/scenarioActions'
 import ScenarioList from '../../components/ScenarioList/ScenarioList'
 
 export default function ScenarioContainer() {
   const { scenarioList } = useSelector((state: StoreState) => ({
-    scenarioList: state.senario.senarioList,
+    scenarioList: state.scenario.scenarioList,
   }))
   const dispatch = useDispatch()
   const onGetSceanrioList = useCallback(() => {
@@ -14,7 +14,7 @@ export default function ScenarioContainer() {
   }, [dispatch])
 
   const onDeleteSceanrioList = useCallback(
-    (data: DeleteSenarioData) => {
+    (data: DeleteScenarioData) => {
       dispatch(deleteSenarioAct(data))
     },
     [dispatch],
