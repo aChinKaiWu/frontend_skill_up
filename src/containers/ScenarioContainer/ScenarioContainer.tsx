@@ -10,7 +10,15 @@ export default function ScenarioContainer() {
     scenarioStore.loadScenarios()
   }, [scenarioStore])
 
+  const onDeleteScenarios = useCallback((scenarioIDs) => {
+    scenarioStore.deleteScenarios(scenarioIDs)
+  }, [scenarioStore])
+
   return useObserver(() => (
-    <ScenarioList scenarioList={scenarioStore.scenarios} onGetScenarioList={onGetScenarioList} />
+    <ScenarioList
+      scenarioList={scenarioStore.scenarios}
+      onGetScenarioList={onGetScenarioList}
+      onDeleteScenarios={onDeleteScenarios}
+    />
   ))
 }

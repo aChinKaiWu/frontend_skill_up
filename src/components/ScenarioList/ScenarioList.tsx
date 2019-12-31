@@ -22,17 +22,15 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetScenarioList: () => void
+  onDeleteScenarios: (ids: number[]) => void
 }
 
 export default function ScenarioList(props: Props) {
-  // destruct
-  const { scenarioList, onGetScenarioList } = props
+  const { scenarioList, onGetScenarioList, onDeleteScenarios } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
-  // dispatch get sceanrios action
-  // reducer get sceanrios
-  // fake componentDidMount
+
   useEffect(() => {
     onGetScenarioList()
   }, [onGetScenarioList])
@@ -53,8 +51,8 @@ export default function ScenarioList(props: Props) {
   )
 
   const onRefresh = useCallback(() => {
-    // Todo: refresh sceanrios
     onGetScenarioList()
+    setCheckedScenarioIDs([])
   }, [onGetScenarioList])
 
   return (
@@ -64,7 +62,21 @@ export default function ScenarioList(props: Props) {
         <Icon>refresh</Icon>
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+      {
+        mode === ScenarioListMode.View ? (
+          <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+        ) : (
+          <Button
+            onClick={() => {
+              onDeleteScenarios(checkedScenarioIDs)
+              setMode(ScenarioListMode.View)
+            }}
+          >
+            確定刪除
+          </Button>
+        )
+      }
+
       {/* sceanrio cards */}
       <div className={classes.list}>
         {scenarioList.map((scenario, idx) => {

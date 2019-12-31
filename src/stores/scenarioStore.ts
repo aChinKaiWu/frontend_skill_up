@@ -10,4 +10,9 @@ export class ScenarioStore {
   loadScenarios(): void {
     this.scenarios = [...fakeScenarioList]
   }
+
+  @action
+  deleteScenarios(ids: number[]): void {
+    this.scenarios = this.scenarios.filter(scenario => !ids.includes(scenario.id))
+  }
 }
