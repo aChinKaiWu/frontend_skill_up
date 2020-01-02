@@ -10,6 +10,7 @@ import IconRun from '../../assets/icons/status_run.svg'
 import IconStop from '../../assets/icons/status_stop.svg'
 import { ScenarioListMode } from '../ScenarioList/ScenarioList'
 import DeletionCheckbox from './DeletionCheckbox'
+import FakeScenarioImg from '../../assets/icons/fake-scenario.png'
 
 const useStyles = makeStyles({
   card: {
@@ -72,7 +73,7 @@ export default function ScenarioCard(props: Props) {
           </>
         }
       />
-      <CardMedia component="img" image={scenario.thumbnail_url} className="thumbnail" />
+      <CardMedia component="img" image={FakeScenarioImg} className="thumbnail" />
       <CardContent className="content">
         <div>{scenario.display_name}</div>
         <div>{dayjs(scenario.updated_at).format('YYYY/MM/DD HH:mm')}</div>

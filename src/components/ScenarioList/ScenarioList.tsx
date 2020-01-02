@@ -22,11 +22,12 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetSceanrioList: () => void
+  onDeleteScenarios: (deleteIDs: string) => void
 }
 
 export default function ScenarioList(props: Props) {
   // destruct
-  const { scenarioList, onGetSceanrioList } = props
+  const { scenarioList, onGetSceanrioList, onDeleteScenarios } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
@@ -36,6 +37,8 @@ export default function ScenarioList(props: Props) {
   useEffect(() => {
     onGetSceanrioList()
   }, [onGetSceanrioList])
+
+  useEffect(() => setMode(ScenarioListMode.View), [setMode, scenarioList])
 
   const onCheck = useCallback(
     (scenarioID: number) => {
@@ -57,6 +60,14 @@ export default function ScenarioList(props: Props) {
     onGetSceanrioList()
   }, [onGetSceanrioList])
 
+  const onChangeMode = useCallback(() => {
+    if (mode === ScenarioListMode.Delete) {
+      onDeleteScenarios(checkedScenarioIDs.join(','))
+      return
+    }
+    setMode(ScenarioListMode.Delete)
+  }, [setMode, mode, checkedScenarioIDs])
+
   return (
     <>
       {/* header */}
@@ -64,13 +75,14 @@ export default function ScenarioList(props: Props) {
         <Icon>refresh</Icon>
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+      <Button onClick={onChangeMode}>刪除</Button>
       {/* sceanrio cards */}
       <div className={classes.list}>
-        {scenarioList.map((scenario, idx) => {
-          const isChecked = checkedScenarioIDs.includes(scenario.id)
-          return <ScenarioCard key={idx} scenario={scenario} mode={mode} isChecked={isChecked} onCheck={onCheck} />
-        })}
+        {scenarioList &&
+          scenarioList.map((scenario, idx) => {
+            const isChecked = checkedScenarioIDs.includes(scenario.id)
+            return <ScenarioCard key={idx} scenario={scenario} mode={mode} isChecked={isChecked} onCheck={onCheck} />
+          })}
       </div>
     </>
   )

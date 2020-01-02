@@ -8,6 +8,12 @@ const Checkbox = styled('div')({
   right: 4,
   width: 44,
   height: 44,
+  borderRadius: '50%',
+  lineHeight: '44px',
+  textAlign: 'center',
+  fontWeight: 900,
+  color: '#ffffff',
+  cursor: 'default',
   '&.active': {
     background: 'red',
   },
