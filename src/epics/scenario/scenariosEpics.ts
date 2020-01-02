@@ -1,24 +1,25 @@
 import { AnyAction } from 'redux'
 import { ActionsObservable, ofType } from 'redux-observable'
-import { of } from 'rxjs'
-import { ajax, AjaxResponse } from 'rxjs/ajax'
+import { of, from } from 'rxjs'
 import { exhaustMap, map, catchError } from 'rxjs/operators'
 import { Scenario } from '../../model/scenario'
-import { setSenarioAct, deleteSenarioSuccessAct, SCENARIO_ACTION_TYPES } from '../../reducer/scenario/scenarioActions'
+import {
+  getScenarioSuccessAct,
+  deleteScenarioSuccessAct,
+  SCENARIO_ACTION_TYPES,
+} from '../../reducer/scenario/scenarioActions'
+import { fetchScenariosAjax, deleteScenariosAjax } from './scenarioService'
 import FakeScenarioImg from '../../assets/icons/fake-scenario.png'
-
-interface ResponseType<T> extends AjaxResponse {
-  response: T
-}
 
 export const getScenarioListEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
-    ofType(SCENARIO_ACTION_TYPES.GET_SENARIO_LIST),
+    ofType(SCENARIO_ACTION_TYPES.GET_SCENARIO_LIST),
     exhaustMap(() =>
-      ajax('https://svelte-functions.cruzshia.now.sh/api/scenarios').pipe(
-        map((res: ResponseType<{ scenarios: Scenario[] }>) => {
-          res.response.scenarios.forEach((scenario: Scenario) => (scenario.thumbnail_url = FakeScenarioImg))
-          return setSenarioAct(res.response.scenarios)
+      from(fetchScenariosAjax()).pipe(
+        map(res => {
+          // fake thumbnail images temporarily
+          res.data.scenarios.forEach((scenario: Scenario) => (scenario.thumbnail_url = FakeScenarioImg))
+          return getScenarioSuccessAct(res.data.scenarios)
         }),
         catchError(err => of({ type: err })),
       ),
@@ -27,10 +28,10 @@ export const getScenarioListEpic = (action$: ActionsObservable<AnyAction>) =>
 
 export const deleteScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
-    ofType(SCENARIO_ACTION_TYPES.DELETE_SENARIO),
+    ofType(SCENARIO_ACTION_TYPES.DELETE_SCENARIO),
     exhaustMap(action =>
-      ajax.delete(`https://svelte-functions.cruzshia.now.sh/api/scenarios?ids=${action.data.join(',')}`).pipe(
-        map(() => deleteSenarioSuccessAct(action.data)),
+      from(deleteScenariosAjax(action.payload.join(','))).pipe(
+        map(() => deleteScenarioSuccessAct(action.payload)),
         catchError(err => of({ type: err })),
       ),
     ),

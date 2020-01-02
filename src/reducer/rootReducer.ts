@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import scenarioReducer, { initSenarioState, ScenarioState } from './scenario/scenarioReducer'
+import scenarioReducer, { initSenarioState, ScenarioState } from './scenario/scenarioReducer'
 
 export interface StoreState {
   scenario: ScenarioState

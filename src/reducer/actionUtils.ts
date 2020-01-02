@@ -1,1 +1,2 @@
-export const actionCreator = <T>(type: string) => (data?: T) => ({ type, data })
+export const actionCreator = <T>(type: string) => (payload: T | undefined) => ({ type, payload })
+export const pureActionCreator = (type: string) => () => ({ type })
