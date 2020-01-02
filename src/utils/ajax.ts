@@ -5,17 +5,16 @@ const axiosInstance = axios.create({
   headers: {},
 })
 
+export const setAxiosHost = (hostUrl: string) => {
+  axiosInstance.defaults.baseURL = hostUrl
+}
+
 export const setAxiosToken = (token: string) => {
   axiosInstance.defaults.headers.common['Authorization'] = token
 }
 
 export const removeAxiosToken = () => {
   delete axiosInstance.defaults.headers.common['Authorization']
-}
-
-export type HttpResponse<T> = {
-  status: number
-  data: T
 }
 
 export default axiosInstance

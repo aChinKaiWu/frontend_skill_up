@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, makeStyles, Icon } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
-import { DeleteScenarioData } from '../../reducer/scenario/scenarioActions'
 import { Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
@@ -23,7 +22,7 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetSceanrioList: () => void
-  onDeleteSceanrioList: (data: DeleteScenarioData) => void
+  onDeleteSceanrioList: (ids: number[]) => void
 }
 
 export default function ScenarioList(props: Props) {
@@ -63,7 +62,7 @@ export default function ScenarioList(props: Props) {
     onDeleteSceanrioList(checkedScenarioIDs)
     setMode(ScenarioListMode.View)
     setCheckedScenarioIDs([])
-  }, [isViewMode, onDeleteSceanrioList, setMode, checkedScenarioIDs, setCheckedScenarioIDs])
+  }, [isViewMode, onDeleteSceanrioList, setMode, setCheckedScenarioIDs, checkedScenarioIDs])
 
   const onRefresh = useCallback(() => {
     // Todo: refresh sceanrios

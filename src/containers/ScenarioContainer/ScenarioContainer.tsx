@@ -1,29 +1,19 @@
 import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { StoreState } from '../../reducer/rootReducer'
-import { getScenarioAct, deleteScenarioAct, DeleteScenarioData } from '../../reducer/scenario/scenarioActions'
+import { useStore } from 'effector-react'
+import scenarioStore from '../../store/scenario/scenarioStore'
+import { getScenarioList, deleteScenarios } from '../../store/scenario/scenarioEvents'
 import ScenarioList from '../../components/ScenarioList/ScenarioList'
 
 export default function ScenarioContainer() {
-  const { scenarioList } = useSelector((state: StoreState) => ({
-    scenarioList: state.scenario.scenarioList,
-  }))
-  const dispatch = useDispatch()
-  const onGetSceanrioList = useCallback(() => {
-    dispatch(getScenarioAct())
-  }, [dispatch])
+  const { scenarios } = useStore(scenarioStore)
+  const onGetSceanrioList = useCallback(() => getScenarioList(), [])
 
-  const onDeleteSceanrioList = useCallback(
-    (data: DeleteScenarioData) => {
-      dispatch(deleteScenarioAct(data))
-    },
-    [dispatch],
-  )
+  const onDeleteSceanrioList = useCallback((ids: number[]) => deleteScenarios(ids), [])
 
   return (
     <>
       <ScenarioList
-        scenarioList={scenarioList}
+        scenarioList={scenarios}
         onGetSceanrioList={onGetSceanrioList}
         onDeleteSceanrioList={onDeleteSceanrioList}
       />
