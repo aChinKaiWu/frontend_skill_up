@@ -6,11 +6,11 @@ export interface ScenarioState {
   scenarioList: Scenario[]
 }
 
-export const initSenarioState = {
+export const initScenarioState = {
   scenarioList: [],
 }
 
-export default function scenarioReducer(state = initSenarioState, action: AnyAction) {
+export default function scenarioReducer(state = initScenarioState, action: AnyAction) {
   switch (action.type) {
     case SCENARIO_ACTION_TYPES.GET_SCENARIO_LIST_SUCCESS:
       return {
@@ -20,7 +20,7 @@ export default function scenarioReducer(state = initSenarioState, action: AnyAct
     case SCENARIO_ACTION_TYPES.DELETE_SCENARIO_SUCCESS:
       return {
         ...state,
-        scenarioList: state.scenarioList.filter((senario: Scenario) => !action.payload.includes(senario.id)),
+        scenarioList: state.scenarioList.filter((scenario: Scenario) => !action.payload.includes(scenario.id)),
       }
     default:
       return state
