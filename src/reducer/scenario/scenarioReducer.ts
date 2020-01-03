@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { scenarioActionTypes } from './scenarioAction'
+import { scenarioActionTypes } from './scenarioActions'
 import { ScenarioList } from '../../model/scenario'
 
 export interface ScenarioState {
