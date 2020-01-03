@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Card, CardHeader, CardMedia, CardContent, CardActions, Icon, makeStyles } from '@material-ui/core'
 import dayjs from 'dayjs'
-import Scenario from '../../model/scenario'
+import { Scenario } from '../../model/scenario'
 import { ScenarioListMode } from '../ScenarioList/ScenarioList'
 import DeletionCheckbox from './DeletionCheckbox'
 import IconEdit from '../../assets/icons/scenario_edit.svg'

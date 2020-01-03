@@ -1,4 +1,4 @@
-export default interface Scenario {
+export interface Scenario {
   id: number
   display_name: string
   created_at: string

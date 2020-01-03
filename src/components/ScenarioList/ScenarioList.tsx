@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Icon, makeStyles } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
-import Scenario from '../../model/scenario'
+import { Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
   button: {
