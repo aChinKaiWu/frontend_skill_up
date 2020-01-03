@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux'
 import { ActionsObservable, ofType } from 'redux-observable'
 import { of } from 'rxjs'
+import { ajax } from 'rxjs/ajax'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 
 import {
@@ -8,58 +9,14 @@ import {
   getScenarioListSuccessAction,
   scenarioActionTypes,
 } from '../reducer/scenario/scenarioActions'
-import { ScenarioList } from '../model/scenario'
-import FakeScenarioImg from '../assets/icons/fake-scenario.png'
+// import { ScenarioList } from '../model/scenario'
 
 export const getScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
     ofType(scenarioActionTypes.GET_SCENARIO_LIST),
     exhaustMap(() =>
-      of([
-        {
-          id: 1,
-          display_name: 'abc',
-          created_at: '2019-12-19T11:22:33Z',
-          updated_at: '2019-12-20T03:04:05Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-        {
-          id: 2,
-          display_name: 'def',
-          created_at: '2019-12-18T11:22:33Z',
-          updated_at: '2019-12-20T07:08:09Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-        {
-          id: 3,
-          display_name: 'qwe',
-          created_at: '2019-12-19T11:22:34Z',
-          updated_at: '2019-12-20T12:00:10Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-        {
-          id: 4,
-          display_name: 'htyg',
-          created_at: '2019-12-16T11:52:39Z',
-          updated_at: '2019-12-20T03:55:44Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-        {
-          id: 5,
-          display_name: 'vvvv',
-          created_at: '2019-12-1519T03:00:28Z',
-          updated_at: '2019-12-16T02:28:25Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-        {
-          id: 6,
-          display_name: 'nnmm',
-          created_at: '2019-12-17T09:56:04Z',
-          updated_at: '2019-12-19T11:11:11Z',
-          thumbnail_url: FakeScenarioImg,
-        },
-      ]).pipe(
-        map((res: ScenarioList) => getScenarioListSuccessAction(res)),
+      ajax('https://svelte-functions.cruzshia.now.sh/api/scenarios').pipe(
+        map(res => getScenarioListSuccessAction(res.response['scenarios'])),
         catchError(() => of(getScenarioListFailureAction())),
       ),
     ),
