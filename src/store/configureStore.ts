@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, Middleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import rootReducer, { initStoreState } from '../reducer/rootReducer'
+import { createEpicMiddleware } from 'redux-observable'
+import rootEpics from '../epics/rootEpic'
 
 const bindMiddleware = (middleware: Middleware[]) => {
   if (process.env.NODE_ENV === 'development') {
@@ -11,7 +13,8 @@ const bindMiddleware = (middleware: Middleware[]) => {
 }
 
 export default function configureStore(preloadState = initStoreState) {
-  const store = createStore(rootReducer, preloadState, bindMiddleware([]))
-  console.log(store.getState())
+  const epicMiddleware = createEpicMiddleware()
+  const store = createStore(rootReducer, preloadState, bindMiddleware([epicMiddleware]))
+  epicMiddleware.run(rootEpics)
   return store
 }

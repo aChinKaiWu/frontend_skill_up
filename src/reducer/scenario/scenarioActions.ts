@@ -3,6 +3,7 @@ import { ScenarioList } from '../../model/scenario'
 export const scenarioActionTypes = {
   GET_SCENARIO_LIST: '😎scenarios/GET_LIST',
   GET_SCENARIO_LIST_SUCCESS: '😎scenarios/GET_LIST_SUCCESS',
+  GET_SCENARIO_LIST_FAILURE: '😎scenarios/GET_LIST_FAILURE',
 
   DELETE_SCENARIO: '😎scenarios/DELETE',
   DELETE_SCENARIO_SUCCESS: '😎scenarios/DELETE_SUCCESS',
@@ -14,6 +15,9 @@ export const getScenarioListAction = () => ({
 export const getScenarioListSuccessAction = (payload: ScenarioList) => ({
   type: scenarioActionTypes.GET_SCENARIO_LIST_SUCCESS,
   payload,
+})
+export const getScenarioListFailureAction = () => ({
+  type: scenarioActionTypes.GET_SCENARIO_LIST_FAILURE,
 })
 
 export const deleteScenarioAction = (payload: number[]) => ({

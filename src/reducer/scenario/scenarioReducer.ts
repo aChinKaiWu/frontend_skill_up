@@ -17,6 +17,7 @@ export default function scenarioReducer(state: ScenarioState = scenarioInitState
         ...state,
         scenarioList: action.payload,
       }
+    case scenarioActionTypes.GET_SCENARIO_LIST_FAILURE:
     default:
       return state
   }
