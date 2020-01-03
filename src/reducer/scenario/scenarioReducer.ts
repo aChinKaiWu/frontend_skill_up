@@ -1,15 +1,15 @@
 import { AnyAction } from 'redux'
 import { Scenario } from '../../model/scenario'
 
-export interface scenarioState {
+export interface ScenarioState {
   scenarioList: Scenario[]
 }
 
-export const scenarioInitState: scenarioState = {
+export const scenarioInitState: ScenarioState = {
   scenarioList: []
 }
 
-export default function scenarioReducer(state: scenarioState = scenarioInitState, action: AnyAction) {
+export default function scenarioReducer(state: ScenarioState = scenarioInitState, action: AnyAction) {
   switch(action.type) {
     default:
       return state
