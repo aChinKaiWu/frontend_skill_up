@@ -11,7 +11,7 @@ export const scenarioActionTypes = {
 }
 
 export const getScenarioListAction = () => ({
-  type: scenarioActionTypes.GET_SCENARIO_LIST
+  type: scenarioActionTypes.GET_SCENARIO_LIST,
 })
 
 export const getScenarioListSuccessAction = (payload: Scenario[]) => ({
@@ -31,5 +31,5 @@ export const deleteScenariosAction = (payload: number[]) => ({
 
 export const deleteScenariosFailedAction = (error: any) => ({
   type: scenarioActionTypes.DELETE_SCENARIO_SUCCESS,
-  error
+  error,
 })

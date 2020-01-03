@@ -17,6 +17,11 @@ export default function scenarioReducer(state: ScenarioState = scenarioInitState
         ...state,
         scenarioList: action.payload,
       }
+    case scenarioActionTypes.DELETE_SCENARIO_SUCCESS:
+      return {
+        ...state,
+        scenarioList: state.scenarioList.filter(scenario => !action.payload.includes(scenario.id))
+      }
     default:
       return state
   }
