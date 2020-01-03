@@ -22,23 +22,23 @@ export enum ScenarioListMode {
 
 interface Props {
   scenarioList: Scenario[]
-  onGetSceanrioList: () => void
-  onDeleteSceanrioList: (data: DeleteScenarioData) => void
+  onGetScenarioList: () => void
+  onDeleteScenarioList: (data: DeleteScenarioData) => void
 }
 
 export default function ScenarioList(props: Props) {
   // destruct
-  const { scenarioList, onGetSceanrioList, onDeleteSceanrioList } = props
+  const { scenarioList, onGetScenarioList, onDeleteScenarioList } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
   const isViewMode = mode === ScenarioListMode.View
-  // dispatch get sceanrios action
-  // reducer get sceanrios
+  // dispatch get scenarios action
+  // reducer get scenarios
   // fake componentDidMount
   useEffect(() => {
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
   const onCheck = useCallback(
     (scenarioID: number) => {
@@ -60,15 +60,15 @@ export default function ScenarioList(props: Props) {
       setMode(ScenarioListMode.Delete)
       return
     }
-    onDeleteSceanrioList(checkedScenarioIDs)
+    onDeleteScenarioList(checkedScenarioIDs)
     setMode(ScenarioListMode.View)
     setCheckedScenarioIDs([])
-  }, [isViewMode, onDeleteSceanrioList, setMode, checkedScenarioIDs, setCheckedScenarioIDs])
+  }, [isViewMode, onDeleteScenarioList, setMode, checkedScenarioIDs, setCheckedScenarioIDs])
 
   const onRefresh = useCallback(() => {
-    // Todo: refresh sceanrios
-    onGetSceanrioList()
-  }, [onGetSceanrioList])
+    // Todo: refresh scenarios
+    onGetScenarioList()
+  }, [onGetScenarioList])
 
   return (
     <>
@@ -78,7 +78,7 @@ export default function ScenarioList(props: Props) {
         更新
       </Button>
       <Button onClick={onButtonClick}>{isViewMode ? '選擇刪除項目' : '刪除'}</Button>
-      {/* sceanrio cards */}
+      {/* scenario cards */}
       <div className={classes.list}>
         {scenarioList.map((scenario, idx) => {
           const isChecked = checkedScenarioIDs.includes(scenario.id)

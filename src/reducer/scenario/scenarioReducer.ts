@@ -10,19 +10,21 @@ export const initScenarioState = {
   scenarioList: [],
 }
 
+const { GET_SCENARIO_LIST_SUCCESS, DELETE_SCENARIO_SUCCESS } = SCENARIO_ACTION_TYPES
+const handlers: Record<string, Function> = {
+  [GET_SCENARIO_LIST_SUCCESS]: (state: ScenarioState, action: AnyAction) => ({
+    ...state,
+    scenarioList: action.payload,
+  }),
+  [DELETE_SCENARIO_SUCCESS]: (state: ScenarioState, action: AnyAction) => ({
+    ...state,
+    scenarioList: state.scenarioList.filter((scenario: Scenario) => !action.payload.includes(scenario.id)),
+  }),
+}
+
 export default function scenarioReducer(state = initScenarioState, action: AnyAction) {
-  switch (action.type) {
-    case SCENARIO_ACTION_TYPES.GET_SCENARIO_LIST_SUCCESS:
-      return {
-        ...state,
-        scenarioList: action.payload,
-      }
-    case SCENARIO_ACTION_TYPES.DELETE_SCENARIO_SUCCESS:
-      return {
-        ...state,
-        scenarioList: state.scenarioList.filter((scenario: Scenario) => !action.payload.includes(scenario.id)),
-      }
-    default:
-      return state
+  if (handlers.hasOwnProperty(action.type)) {
+    return handlers[action.type](state, action)
   }
+  return state
 }

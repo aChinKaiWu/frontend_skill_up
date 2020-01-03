@@ -9,11 +9,11 @@ export default function ScenarioContainer() {
     scenarioList: state.scenario.scenarioList,
   }))
   const dispatch = useDispatch()
-  const onGetSceanrioList = useCallback(() => {
+  const onGetScenarioList = useCallback(() => {
     dispatch(getScenarioAct())
   }, [dispatch])
 
-  const onDeleteSceanrioList = useCallback(
+  const onDeleteScenarioList = useCallback(
     (data: DeleteScenarioData) => {
       dispatch(deleteScenarioAct(data))
     },
@@ -24,8 +24,8 @@ export default function ScenarioContainer() {
     <>
       <ScenarioList
         scenarioList={scenarioList}
-        onGetSceanrioList={onGetSceanrioList}
-        onDeleteSceanrioList={onDeleteSceanrioList}
+        onGetScenarioList={onGetScenarioList}
+        onDeleteScenarioList={onDeleteScenarioList}
       />
     </>
   )
