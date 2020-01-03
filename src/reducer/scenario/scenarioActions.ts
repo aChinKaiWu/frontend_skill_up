@@ -29,7 +29,12 @@ export const deleteScenariosAction = (payload: number[]) => ({
   payload,
 })
 
-export const deleteScenariosFailedAction = (error: any) => ({
+export const deleteScenariosSuccessAction = (payload: number[]) => ({
   type: scenarioActionTypes.DELETE_SCENARIO_SUCCESS,
+  payload,
+})
+
+export const deleteScenariosFailedAction = (error: any) => ({
+  type: scenarioActionTypes.DELETE_SCENARIO_FAILED,
   error,
 })

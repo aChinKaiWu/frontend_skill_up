@@ -22,14 +22,16 @@ export enum ScenarioListMode {
 interface Props {
   scenarioList: Scenario[]
   onGetSceanrioList: () => void
+  onDeleteScenarios: (ids: number[]) => void
 }
 
 export default function ScenarioList(props: Props) {
   // destruct
-  const { scenarioList, onGetSceanrioList } = props
+  const { scenarioList, onGetSceanrioList, onDeleteScenarios } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
+  const isViewMode = mode === ScenarioListMode.View
   // dispatch get sceanrios action
   // reducer get sceanrios
   // fake componentDidMount
@@ -52,6 +54,16 @@ export default function ScenarioList(props: Props) {
     [checkedScenarioIDs],
   )
 
+  const onClick = useCallback(() => {
+    if (isViewMode) {
+      setMode(ScenarioListMode.Delete)
+      return
+    }
+    onDeleteScenarios(checkedScenarioIDs)
+    setMode(ScenarioListMode.View)
+    setCheckedScenarioIDs([])
+  }, [checkedScenarioIDs, isViewMode, setMode, onDeleteScenarios])
+
   const onRefresh = useCallback(() => {
     // Todo: refresh sceanrios
     onGetSceanrioList()
@@ -64,9 +76,9 @@ export default function ScenarioList(props: Props) {
         <Icon>refresh</Icon>
         更新
       </Button>
-      <Button onClick={() => setMode(ScenarioListMode.Delete)}>
+      <Button onClick={onClick}>
         <Icon>delete</Icon>
-        刪除
+        {isViewMode ? 'Delete' : 'Comfirm Delete'}
       </Button>
       {/* sceanrio cards */}
       <div className={classes.list}>
