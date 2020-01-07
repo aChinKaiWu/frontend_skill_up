@@ -5,3 +5,6 @@ export interface Scenario {
   updated_at: string
   thumbnail_url: string
 }
+
+export type ScenarioList = Scenario[]
+export type DeleteScenarioData = number[]

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import scenarioReducer, { scenarioInitSate, ScanrioState } from './scenario/scenarioReducer'
+import scenarioReducer, { scenarioInitState, ScenarioState } from '../reducer/scenario/scenarioReducer'
 
 export interface StoreState {
-  scenario: ScanrioState
+  scenario: ScenarioState
 }
 
 export const initStoreState: StoreState = {
-  scenario: scenarioInitSate,
+  scenario: scenarioInitState,
 }
 
 export default combineReducers({
