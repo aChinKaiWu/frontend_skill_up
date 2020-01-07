@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import ScenarioRouter from '@routers/scenario'
+import SensorRouter from '@routers/sensor'
 
 const app = express()
 
@@ -17,5 +18,6 @@ app.use(cors())
 
 // Routes
 app.use('/v1/scenarios', ScenarioRouter)
+app.use('/v1/sensors', SensorRouter)
 
 export default app

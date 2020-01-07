@@ -5,10 +5,3 @@ export interface Scenario {
   updated_at: string
   thumbnail_url: string
 }
-
-export interface Sensor {
-  id: string
-  display_name: string
-  type: 'a' | 'b'
-  qq?: number
-}
