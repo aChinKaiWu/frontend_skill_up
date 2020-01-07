@@ -26,12 +26,13 @@ export enum ScenarioListMode {
 
 interface Props {
   scenarioList: Scenario[]
+  onDeleteScenario: (deletionID: number[]) => void
   onGetScenarioList: () => void
 }
 
 export default function ScenarioList(props: Props) {
   const classes = useStyles()
-  const { scenarioList, onGetScenarioList } = props
+  const { scenarioList, onDeleteScenario, onGetScenarioList } = props
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
 
@@ -56,6 +57,16 @@ export default function ScenarioList(props: Props) {
     [checkedScenarioIDs],
   )
 
+  const onDelete = useCallback(() => {
+    if (mode === ScenarioListMode.View) {
+      setMode(ScenarioListMode.Delete)
+      return
+    }
+    onDeleteScenario(checkedScenarioIDs)
+    setMode(ScenarioListMode.View)
+    setCheckedScenarioIDs([])
+  }, [mode, onDeleteScenario, checkedScenarioIDs])
+
   return (
     <>
       {/* header */}
@@ -64,7 +75,7 @@ export default function ScenarioList(props: Props) {
           <Icon className={classes.icon}>refresh</Icon>
           更新
         </Button>
-        <Button onClick={() => setMode(ScenarioListMode.Delete)}>刪除</Button>
+        <Button onClick={onDelete}>{mode === ScenarioListMode.View ? '選擇刪除項目' : '刪除'}</Button>
         <Button
           onClick={() => {
             setMode(ScenarioListMode.View)
