@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-  baseURL: 'https://svelte-functions.cruzshia.now.sh',
+  baseURL: 'http://localhost:8080',
   headers: {},
 })
 
