@@ -7,3 +7,4 @@ export interface Scenario {
 }
 
 export type ScenarioList = Scenario[]
+export type DeleteScenarioData = number[]
