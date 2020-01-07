@@ -1,9 +1,8 @@
 import { AnyAction } from 'redux'
 import { ActionsObservable, ofType } from 'redux-observable'
 import { of } from 'rxjs'
-// import { ajax } from 'rxjs/ajax'
+import { ajax, AjaxResponse } from 'rxjs/ajax'
 import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators'
-import mockData from './mockData'
 
 import {
   getScenarioListFailureAction,
@@ -12,14 +11,14 @@ import {
   deleteScenarioSuccessAction,
   scenarioActionTypes,
 } from '../../reducer/scenario/scenarioActions'
-import { ScenarioList } from '../../model/scenario'
+// import { ScenarioList } from '../../model/scenario'
 
 export const getScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
     ofType(scenarioActionTypes.GET_SCENARIO_LIST),
     exhaustMap(() =>
-      of(mockData).pipe(
-        map((res: ScenarioList) => getScenarioListSuccessAction(res)),
+      ajax.get('/v1/scenarios/').pipe(
+        map((res: AjaxResponse) => getScenarioListSuccessAction(res.response)),
         catchError(err => of(getScenarioListFailureAction(err))),
       ),
     ),
