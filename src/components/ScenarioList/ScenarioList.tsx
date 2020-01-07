@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Icon, makeStyles } from '@material-ui/core'
 import ScenarioCard from '../ScenarioCard/ScenarioCard'
-import { Scenario } from '../../model/scenario'
+import { DeleteScenarioData, Scenario } from '../../model/scenario'
 
 const useStyles = makeStyles({
   button: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 interface Props {
   scenarioList: Scenario[]
   onGetScenarioList: () => void
+  onDeleteScenarios: (ids: DeleteScenarioData) => void
 }
 
 export enum ScenarioListMode {
@@ -32,10 +33,11 @@ export enum ScenarioListMode {
 }
 
 export default function ScenarioList(props: Props) {
-  const { scenarioList, onGetScenarioList } = props
+  const { scenarioList, onGetScenarioList, onDeleteScenarios } = props
   const classes = useStyles()
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
-  const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
+  const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<DeleteScenarioData>([])
+  const isViewMode = mode === ScenarioListMode.View
 
   // dispatch get scenarios action
   // get scenarios from reducer
@@ -57,6 +59,16 @@ export default function ScenarioList(props: Props) {
     [checkedScenarioIDs],
   )
 
+  const onClick = useCallback(() => {
+    if (isViewMode) {
+      setMode(ScenarioListMode.Delete)
+      return
+    }
+    onDeleteScenarios(checkedScenarioIDs)
+    setMode(ScenarioListMode.View)
+    setCheckedScenarioIDs([])
+  }, [checkedScenarioIDs, isViewMode, setMode, onDeleteScenarios])
+
   const onRefresh = useCallback(() => {
     // TODO handle refresh
     onGetScenarioList()
@@ -69,9 +81,9 @@ export default function ScenarioList(props: Props) {
         <Icon children="refresh" />
         更新
       </Button>
-      <Button className={classes.button} variant="outlined" onClick={() => setMode(ScenarioListMode.Delete)}>
+      <Button className={classes.button} variant="outlined" onClick={onClick}>
         <Icon children="delete" />
-        刪除
+        {isViewMode ? '刪除' : '確認'}
       </Button>
       {/* scenario cards */}
       <div className={classes.list}>
