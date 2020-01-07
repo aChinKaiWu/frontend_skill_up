@@ -28,7 +28,7 @@ export const deleteScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
     ofType(scenarioActionTypes.DELETE_SCENARIO),
     switchMap(action =>
-      of([]).pipe(
+      ajax.delete(`/v1/scenarios/${action.payload}`).pipe(
         map(() => deleteScenarioSuccessAction(action.payload)),
         catchError(err => of(deleteScenarioFailureAction(err))),
       ),
