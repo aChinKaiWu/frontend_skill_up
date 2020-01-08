@@ -37,7 +37,7 @@ SensorRouter.get('/:id', function(req, res) {
   res.send(sensor)
 })
 
-SensorRouter.post('/', function(req, res) {
+SensorRouter.post('/', async function(req, res) {
   const { display_name } = req.body
   if (!display_name) {
     res.status(400).send({
@@ -52,10 +52,14 @@ SensorRouter.post('/', function(req, res) {
     })
     return
   }
-  const newSensor = {
-    ...req.body,
-    id: fakeSensors.length + 1,
-  }
+  const newSensor = await new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        ...req.body,
+        id: fakeSensors.length + 1,
+      })
+    }, 2000)
+  })
   fakeSensors.push(newSensor)
   res.send(newSensor)
 })
