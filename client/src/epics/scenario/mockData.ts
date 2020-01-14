@@ -1,5 +1,6 @@
-import FakeScenarioImg from '../../assets/icons/fake-scenario.png'
-export default [
+import FakeScenarioImg from '../assets/icons/fake-scenario.png'
+
+export const scenarioList = [
   {
     id: 1,
     display_name: 'abc',

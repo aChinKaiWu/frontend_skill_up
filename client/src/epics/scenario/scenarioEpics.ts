@@ -1,34 +1,36 @@
+import { ActionsObservable, ofType } from 'redux-observable'
 import { AnyAction } from 'redux'
 import {
   scenarioActionTypes,
   getScenarioListSuccessAction,
+  // ScenarioList,
   getScenarioListFailedAction,
   deleteScenariosSuccessAction,
-  deleteScenariosFailedActionAction,
+  deleteScenariosFailedAction,
+  getScenarioListAction,
 } from '../../reducer/scenario/scenarioActions'
-import { ActionsObservable, ofType } from 'redux-observable'
+import { exhaustMap, switchMap, catchError, map, mergeMap } from 'rxjs/operators'
 import { of } from 'rxjs'
-import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators'
 import { ajax, AjaxResponse } from 'rxjs/ajax'
 
-export const getScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
+const getScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
-    ofType(scenarioActionTypes.GET_SCENARIO_LIST),
+    ofType(scenarioActionTypes.GET),
     exhaustMap(() =>
-      ajax.get('http://localhost:8080/v1/scenarios').pipe(
+      ajax('v1/scenarios').pipe(
         map((res: AjaxResponse) => getScenarioListSuccessAction(res.response)),
         catchError(err => of(getScenarioListFailedAction(err))),
       ),
     ),
   )
 
-export const deleteScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
+const deleteScenarioEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
-    ofType(scenarioActionTypes.DELETE_SCENARIO),
+    ofType(scenarioActionTypes.DELETE),
     switchMap(action =>
-      ajax.delete(`http://localhost:8080/v1/scenarios/${action.payload}`).pipe(
-        map(() => deleteScenariosSuccessAction(action.payload)),
-        catchError(err => of(deleteScenariosFailedActionAction(err))),
+      ajax.delete(`v1/scenarios/${action.payload}`).pipe(
+        mergeMap((res: AjaxResponse) => of(getScenarioListAction(), deleteScenariosSuccessAction(res.response))),
+        catchError(err => of(deleteScenariosFailedAction(err))),
       ),
     ),
   )

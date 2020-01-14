@@ -11,11 +11,11 @@ export default function ScenarioContainer() {
 
   const onGetSceanrioList = useCallback(() => {
     dispatch(getScenarioListAction())
-  }, [])
+  }, [dispatch])
 
   const onDeleteScenarios = useCallback(deleteIDs => {
     dispatch(deleteScenariosAction(deleteIDs))
-  }, [])
+  }, [dispatch])
 
   return (
     <>
