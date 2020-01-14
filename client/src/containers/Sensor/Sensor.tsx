@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import List from './components/List'
 import { useSelector, useDispatch } from 'react-redux'
 import { StoreState } from '../../reducer/rootReducer'
-import { getSensorListAction } from '../../reducer/sensor/sensorActions'
+import { getSensorListAction, createSensorAction } from '../../reducer/sensor/sensorActions'
+import { SensorRequestBody } from '../../model/sensor'
 
 export default function Sensor() {
   const dispatch = useDispatch()
@@ -17,5 +18,12 @@ export default function Sensor() {
     [dispatch],
   )
 
-  return <List sensorList={sensorList} onGetSensorList={onGetSensorList} />
+  const onCreateSensor = useCallback(
+    (formData: SensorRequestBody) => {
+      dispatch(createSensorAction(formData))
+    },
+    [dispatch],
+  )
+
+  return <List sensorList={sensorList} onGetSensorList={onGetSensorList} onCreateSensor={onCreateSensor} />
 }
