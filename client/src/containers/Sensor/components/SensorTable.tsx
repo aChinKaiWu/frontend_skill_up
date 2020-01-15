@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
+import { apiResponse } from '../../../epics/utils'
 import {
   Button,
   Dialog,
@@ -21,6 +22,7 @@ interface Props {
 
 export default function SensorTable(props: Props) {
   const { onCreateSensor, onGetSensorList, sensorList } = props
+  const [isLoading, setIsLoading] = useState(false)
   const [sensorBase, setSensorBase] = useState<SensorCreateParams>({
     display_name: '',
     type: 'A',
@@ -33,9 +35,19 @@ export default function SensorTable(props: Props) {
     onGetSensorList()
   }, [onGetSensorList])
 
+  useEffect(() => {
+    const subscription = apiResponse.subscribe({
+      next: () => {
+        setIsLoading(false)
+        toggleForm(false)
+      },
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
   const onSubmit = useCallback(() => {
     onCreateSensor(sensorBase)
-    toggleForm(false)
   }, [onCreateSensor, sensorBase])
 
   return (
@@ -43,7 +55,7 @@ export default function SensorTable(props: Props) {
       <div>
         <Button onClick={() => toggleForm(true)}>新增</Button>
       </div>
-      <Table>
+      <Table style={{ background: '#fff' }}>
         <TableHead>
           <TableRow>
             {tableHead.map(head => (
@@ -66,22 +78,35 @@ export default function SensorTable(props: Props) {
           <DialogContent>
             <div>
               <TextField
+                disabled={isLoading}
                 label="Display name"
                 onChange={e => setSensorBase({ ...sensorBase, display_name: e.target.value })}
               />
             </div>
             <div>
               <TextField
+                disabled={isLoading}
                 label="Type"
                 onChange={e => setSensorBase({ ...sensorBase, type: e.target.value as SensorCreateParams['type'] })}
               />
             </div>
             <div>
-              <TextField label="Extra" onChange={e => setSensorBase({ ...sensorBase, extra: e.target.value })} />
+              <TextField
+                disabled={isLoading}
+                label="Extra"
+                onChange={e => setSensorBase({ ...sensorBase, extra: e.target.value })}
+              />
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onSubmit}>Submit</Button>
+            <Button
+              onClick={() => {
+                setIsLoading(true)
+                onSubmit()
+              }}
+            >
+              Submit
+            </Button>
             <Button onClick={() => toggleForm(false)}>Cancel</Button>
           </DialogActions>
         </Dialog>
