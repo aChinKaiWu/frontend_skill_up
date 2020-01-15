@@ -6,7 +6,7 @@ import SensorCreation from './SensorCreation'
 
 interface Props {
   onCreateSensor: (sensorBase: SensorCreateParams) => void
-  onGetSensorList: () => void
+  onGetSensorList: (skip: number, limit: number) => void
   sensorList: Sensor[]
 }
 
@@ -16,7 +16,7 @@ export default function SensorTable(props: Props) {
   const tableHead: Array<keyof Sensor> = ['id', 'display_name', 'extra', 'type']
 
   useEffect(() => {
-    onGetSensorList()
+    onGetSensorList(0, 10)
   }, [onGetSensorList])
 
   useEffect(() => {

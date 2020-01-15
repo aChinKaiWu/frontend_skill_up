@@ -27,8 +27,8 @@ const createSensorEpic = (action$: ActionsObservable<AnyAction>) =>
 const getSensorEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
     ofType(sensorActionTypes.GET_SENSOR_LIST),
-    switchMap(() =>
-      ajax.get('/v1/sensors').pipe(
+    switchMap(({ payload: { skip, limit } }) =>
+      ajax.get(`/v1/sensors?skip=${skip}&limit=${limit}`).pipe(
         map((res: AjaxResponse) => {
           return getSensorListSuccess(res.response)
         }),

@@ -25,8 +25,9 @@ export const createSensorFailure = (error: any) => ({
   payload: error,
 })
 
-export const getSensorList = () => ({
+export const getSensorList = (skip: number, limit: number) => ({
   type: sensorActionTypes.GET_SENSOR_LIST,
+  payload: { skip, limit },
 })
 
 export const getSensorListSuccess = (sensorList: Sensor[]) => ({

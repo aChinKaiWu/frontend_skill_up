@@ -18,9 +18,12 @@ export default function Sensor() {
     [dispatch],
   )
 
-  const onGetSensorList = useCallback(() => {
-    dispatch(getSensorList())
-  }, [dispatch])
+  const onGetSensorList = useCallback(
+    (skip: number, limit: number) => {
+      dispatch(getSensorList(skip, limit))
+    },
+    [dispatch],
+  )
 
   return (
     <>
