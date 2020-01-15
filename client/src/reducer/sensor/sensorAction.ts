@@ -16,7 +16,7 @@ export const createSensor = (sensorBase: SensorCreateParams) => ({
 })
 
 export const createSensorSuccess = (sensor: Sensor) => ({
-  type: sensorActionTypes.CREATE_SENSOR,
+  type: sensorActionTypes.CREATE_SENSOR_SUCCESS,
   payload: sensor,
 })
 
