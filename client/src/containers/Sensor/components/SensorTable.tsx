@@ -12,7 +12,7 @@ interface Props {
 
 export default function SensorTable(props: Props) {
   const { onCreateSensor, onGetSensorList, sensorList } = props
-  const [showForm, toggleForm] = useState(false)
+  const [isFormVisible, setIsFormVisible] = useState(false)
   const tableHead: Array<keyof Sensor> = ['id', 'display_name', 'extra', 'type']
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function SensorTable(props: Props) {
   useEffect(() => {
     const subscription = apiResponse.subscribe({
       next: () => {
-        toggleForm(false)
+        setIsFormVisible(false)
       },
     })
 
@@ -39,7 +39,7 @@ export default function SensorTable(props: Props) {
   return (
     <>
       <div>
-        <Button onClick={() => toggleForm(true)}>新增</Button>
+        <Button onClick={() => setIsFormVisible(true)}>新增</Button>
       </div>
       <Table>
         <TableHead>
@@ -59,7 +59,7 @@ export default function SensorTable(props: Props) {
           ))}
         </TableBody>
       </Table>
-      {showForm && <SensorCreation onCancel={() => toggleForm(false)} onSubmit={onSubmit} />}
+      {isFormVisible && <SensorCreation onCancel={() => setIsFormVisible(false)} onSubmit={onSubmit} />}
     </>
   )
 }
