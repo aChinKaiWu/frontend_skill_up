@@ -25,9 +25,5 @@ export default function Sensor() {
     [dispatch],
   )
 
-  return (
-    <>
-      <SensorTable onCreateSensor={onCreateSensor} onGetSensorList={onGetSensorList} sensorList={sensorList} />
-    </>
-  )
+  return <SensorTable onCreateSensor={onCreateSensor} onGetSensorList={onGetSensorList} sensorList={sensorList} />
 }

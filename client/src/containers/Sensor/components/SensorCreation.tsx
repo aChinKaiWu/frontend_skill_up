@@ -31,36 +31,34 @@ export default function SensorCreation(props: Props) {
   }
 
   return (
-    <>
-      <Dialog open={true}>
-        <DialogContent>
-          <div>
-            <TextField
-              disabled={isLoading}
-              label="Display name"
-              onChange={e => setSensorBase({ ...sensorBase, display_name: e.target.value })}
-            />
-          </div>
-          <div>
-            <TextField
-              disabled={isLoading}
-              label="Type"
-              onChange={e => setSensorBase({ ...sensorBase, type: e.target.value as SensorCreateParams['type'] })}
-            />
-          </div>
-          <div>
-            <TextField
-              disabled={isLoading}
-              label="Extra"
-              onChange={e => setSensorBase({ ...sensorBase, extra: e.target.value })}
-            />
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={beforeSubmit}>Submit</Button>
-          <Button onClick={onCancel}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <Dialog open={true}>
+      <DialogContent>
+        <div>
+          <TextField
+            disabled={isLoading}
+            label="Display name"
+            onChange={e => setSensorBase({ ...sensorBase, display_name: e.target.value })}
+          />
+        </div>
+        <div>
+          <TextField
+            disabled={isLoading}
+            label="Type"
+            onChange={e => setSensorBase({ ...sensorBase, type: e.target.value as SensorCreateParams['type'] })}
+          />
+        </div>
+        <div>
+          <TextField
+            disabled={isLoading}
+            label="Extra"
+            onChange={e => setSensorBase({ ...sensorBase, extra: e.target.value })}
+          />
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={beforeSubmit}>Submit</Button>
+        <Button onClick={onCancel}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
   )
 }
