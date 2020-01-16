@@ -22,7 +22,7 @@ export default function SensorCreation(props: Props) {
       next: () => setIsLoading(false),
     })
 
-    return subscription.unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   const beforeSubmit = () => {
