@@ -12,6 +12,12 @@ const initState: SensorState = {
 
 export default function sensorReducer(state = initState, action: AnyAction) {
   switch (action.type) {
+    case sensorActionTypes.CREATE_SENSOR_SUCCESS: {
+      return {
+        ...state,
+        sensorList: [...state.sensorList, action.payload],
+      }
+    }
     case sensorActionTypes.GET_SENSOR_LIST_SUCCESS: {
       return {
         ...state,
