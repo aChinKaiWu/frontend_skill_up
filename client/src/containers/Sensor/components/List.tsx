@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Table, TableHead, TableBody, TableCell, TableRow, Button, Dialog, DialogContent } from '@material-ui/core'
 import { Sensor, SensorRequestBody } from '../../../model/sensor'
 import Form from './Form'
-import { apiReponse } from '../../../epics/utils'
+import { apiResponse } from '../../../epics/utils'
+import { sensorActionTypes } from '../../../reducer/sensor/sensorActions'
 
 interface Props {
   sensorList: Sensor[]
@@ -20,11 +21,16 @@ export default function List(props: Props) {
   }, [onGetSensorList])
 
   useEffect(() => {
-    const subscription = apiReponse.subscribe({
-      next: () => {
-        toggleForm(prev => !prev)
+    const subscription = apiResponse.subscribe(
+      {
+        nextAction: [sensorActionTypes.CREATE_SENSOR_SUCCESS],
       },
-    })
+      {
+        next: () => {
+          toggleForm(prev => !prev)
+        },
+      },
+    )
 
     return () => {
       subscription.unsubscribe()
