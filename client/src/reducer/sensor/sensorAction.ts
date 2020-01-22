@@ -21,7 +21,7 @@ export const createSensorSuccess = (sensor: Sensor) => ({
 })
 
 export const createSensorFailure = (error: any) => ({
-  type: sensorActionTypes.CREATE_SENSOR,
+  type: sensorActionTypes.CREATE_SENSOR_FAILURE,
   payload: error,
 })
 
