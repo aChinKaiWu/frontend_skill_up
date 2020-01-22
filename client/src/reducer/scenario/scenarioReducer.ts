@@ -13,11 +13,9 @@ const initState: ScenarioState = {
 export default function scenarioReducer(state = initState, action: AnyAction) {
   switch (action.type) {
     case scenarioActionTypes.CREATE_SCENARIO_SUCCESS: {
-      const currentScenarioList = [...state.scenarioList]
-      currentScenarioList.push(action.payload)
       return {
         ...state,
-        scenarioList: currentScenarioList,
+        scenarioList: [...state.scenarioList, action.payload],
       }
     }
     case scenarioActionTypes.GET_SCENARIO_LIST_SUCCESS: {

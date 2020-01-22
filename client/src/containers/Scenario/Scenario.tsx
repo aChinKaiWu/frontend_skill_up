@@ -7,7 +7,6 @@ import { ScenarioCreateParams } from '../../model/scenario'
 
 export default function Scenario() {
   const scenarioList = useSelector((state: StoreState) => state.scenario.scenarioList)
-  console.log(scenarioList)
   const dispatch = useDispatch()
 
   const onCreateScenario = useCallback(

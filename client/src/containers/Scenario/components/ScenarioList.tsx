@@ -37,7 +37,7 @@ export default function ScenarioList(props: Props) {
   const { onCreateScenario, onDeleteScenario, onGetScenarioList, scenarioList } = props
   const [mode, setMode] = useState<ScenarioListMode>(ScenarioListMode.View)
   const [checkedScenarioIDs, setCheckedScenarioIDs] = useState<number[]>([])
-  const [openDialog, toggleDialog] = useState<boolean>(false)
+  const [isFormVisible, setIsFormVisible] = useState<boolean>(false)
 
   useEffect(() => {
     onGetScenarioList()
@@ -59,14 +59,14 @@ export default function ScenarioList(props: Props) {
   const onCreate = useCallback(
     (scenarioBase: ScenarioCreateParams) => {
       onCreateScenario(scenarioBase)
-      toggleDialog(false)
+      setIsFormVisible(false)
     },
     [onCreateScenario],
   )
 
   const onCreateCancel = useCallback(() => {
-    openDialog === true && toggleDialog(false)
-  }, [openDialog])
+    isFormVisible && setIsFormVisible(false)
+  }, [isFormVisible])
 
   const onDelete = useCallback(() => {
     if (mode === ScenarioListMode.View) {
@@ -90,7 +90,7 @@ export default function ScenarioList(props: Props) {
           <Icon className={classes.icon}>refresh</Icon>
           更新
         </Button>
-        <Button onClick={() => toggleDialog(true)}>新增</Button>
+        <Button onClick={() => setIsFormVisible(true)}>新增</Button>
         <Button onClick={onDelete}>{mode === ScenarioListMode.View ? '選擇刪除項目' : '刪除'}</Button>
         <Button
           onClick={() => {
@@ -104,7 +104,7 @@ export default function ScenarioList(props: Props) {
       {scenarioList.map((scenario: Scenario) => (
         <ScenarioCard scenario={scenario} key={scenario.id} mode={mode} onChecked={onChecked} />
       ))}
-      {openDialog === true && <ScenarioCreation onCreate={onCreate} onCancel={onCreateCancel} />}
+      {isFormVisible && <ScenarioCreation onCreate={onCreate} onCancel={onCreateCancel} />}
     </>
   )
 }
