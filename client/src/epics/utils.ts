@@ -8,9 +8,8 @@ const subject = new Subject<subjectDataType>()
 export const apiResponse = {
   success: (type: string, data?: any) => subject.next({ type, data }),
   error: (type: string, error: any) => subject.next({ type, error }),
-  observe: () => subject.asObservable(),
   subscribe: (
-    // Support single action in string format or multiple actions in array format
+    // Support multiple actions in array format
     actions: { nextAction: string[]; errorAction?: string[] },
     observer: { next?: (data: any, type?: string) => void; error?: (error: any, type?: string) => void },
   ) =>

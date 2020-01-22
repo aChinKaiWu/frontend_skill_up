@@ -10,7 +10,7 @@ import { ActionsObservable, ofType } from 'redux-observable'
 import { of } from 'rxjs'
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators'
 import { ajax, AjaxResponse } from 'rxjs/ajax'
-import { apiReponse } from '../utils'
+import { apiResponse } from '../utils'
 
 export const getSensorListEpic = (action$: ActionsObservable<AnyAction>) =>
   action$.pipe(
@@ -32,7 +32,7 @@ export const createSensorEpic = (action$: ActionsObservable<AnyAction>) =>
           'Content-Type': 'application/json',
         })
         .pipe(
-          tap(() => apiReponse.next(sensorActionTypes.CREATE_SENSOR_SUCCESS)),
+          tap(() => apiResponse.success(sensorActionTypes.CREATE_SENSOR_SUCCESS)),
           map(() => createSensorSuccessAction()),
           catchError(err => of(createSensorFailedAction(err))),
         ),

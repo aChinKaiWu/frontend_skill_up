@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Table, TableHead, TableBody, TableCell, TableRow, Button, Dialog, DialogContent } from '@material-ui/core'
 import { Sensor, SensorRequestBody } from '../../../model/sensor'
-import Form from './Form'
+// import Form from './Form'
 import { apiResponse } from '../../../epics/utils'
 import { sensorActionTypes } from '../../../reducer/sensor/sensorActions'
+import FinalForm from './FinalForm'
 
 interface Props {
   sensorList: Sensor[]
@@ -72,7 +73,8 @@ export default function List(props: Props) {
       </Table>
       <Dialog open={showForm}>
         <DialogContent>
-          <Form onSubmit={beforeSubmit} />
+          {/* <Form onSubmit={beforeSubmit} /> */}
+          <FinalForm onSubmit={beforeSubmit} />
         </DialogContent>
       </Dialog>
     </>
