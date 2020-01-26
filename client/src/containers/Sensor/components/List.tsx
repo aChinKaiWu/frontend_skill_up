@@ -4,7 +4,7 @@ import { Sensor, SensorList } from '../../../model/sensor'
 
 interface Props {
   sensorList: SensorList
-  onGetSensorList: () => void
+  onGetSensorList: (skip: number, limit: number) => void
 }
 
 export default function List(props: Props) {
@@ -12,7 +12,7 @@ export default function List(props: Props) {
   const tableHead: Array<keyof Sensor> = ['id', 'display_name', 'extra', 'type']
 
   useEffect(() => {
-    onGetSensorList()
+    onGetSensorList(0, 10)
   }, [onGetSensorList])
 
   return (

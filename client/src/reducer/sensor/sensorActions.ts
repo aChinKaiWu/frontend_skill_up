@@ -6,8 +6,9 @@ export const sensorActionTypes = {
   GET_SENSOR_LIST_FAILURE: '😎sensors/GET_LIST_FAILURE',
 }
 
-export const getSensorListAction = () => ({
+export const getSensorListAction = (payload: { skip: number; limit: number }) => ({
   type: sensorActionTypes.GET_SENSOR_LIST,
+  payload,
 })
 export const getSensorListSuccessAction = (payload: SensorList) => ({
   type: sensorActionTypes.GET_SENSOR_LIST_SUCCESS,
